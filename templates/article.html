@@ -7,17 +7,21 @@
 {% block additional_headers %}
         <meta name="author" content="{% for author in article.authors%}{% if loop.first %}{{ author }}{% else %}, {{ author }}{% endif %}{% endfor %}">
         <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ self.title() }}">
+        <meta name="twitter:description" content="{{ self.description() }}">
         <meta property="og:url" content="{{ SITEURL }}/{{ article.url }}">
         {% if article.preview_img %}
-        <meta name="image" property="og:image" content="{{ SITEURL }}/images/{{ article.preview_img }}">
-        <meta property="og:image" content="{{ SITEURL }}/images/{{ article.preview_img }}">
+            {% set preview_img = SITEURL + "/images/" + article.preview_img %}
         {% elif article.illustration %}
-        <meta name="image" property="og:image" content="{{ SITEURL }}/images/{{ article.illustration }}">
-        <meta property="og:image" content="{{ SITEURL }}/images/{{ article.illustration }}">
+            {% set preview_img = SITEURL + "/images/" + article.illustration %}
         {% elif NEST_HEADER_IMAGES %}
-        <meta name="image" property="og:image" content="{{ SITEURL }}/images/{{ NEST_HEADER_IMAGES }}">
-        <meta property="og:image" content="{{ SITEURL }}/images/{{ NEST_HEADER_IMAGES }}">
+            {% set preview_img = SITEURL + "/images/" + NEST_HEADER_IMAGES %}
         {% endif %}
+        {% if NEST_HEADER_IMAGES %}
+        <meta name="image" property="og:image" content="{{ preview_img }}">
+        <meta property="og:image" content="{{ preview_img }}">
+        <meta name="twitter:image" content="{{ preview_img }}">
+        {% endif %}        
 {% endblock additional_headers %}
 
 {% block headerstyle %}
