@@ -1,8 +1,24 @@
 {% extends "base.html" %}
 
 {% block title %}{{ article.title }} - {{ super() }}{% endblock title %}
-{% block description %}{{ article.content|striptags|truncate(200)|escape }}{% endblock description %}
+{% block description %}{{ article.content|striptags|truncate(200)|replace("¶", " – ")|escape }}{% endblock description %}
 {% block keywords %}{% for tag in article.tags|sort %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% endblock keywords %}
+
+{% block additional_headers %}
+        <meta name="author" content="{% for author in article.authors%}{% if loop.first %}{{ author }}{% else %}, {{ author }}{% endif %}{% endfor %}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:url" content="{{ SITEURL }}/{{ article.url }}">
+        {% if article.preview_img %}
+        <meta name="image" property="og:image" content="{{ SITEURL }}/images/{{ article.preview_img }}">
+        <meta property="og:image" content="{{ SITEURL }}/images/{{ article.preview_img }}">
+        {% elif article.illustration %}
+        <meta name="image" property="og:image" content="{{ SITEURL }}/images/{{ article.illustration }}">
+        <meta property="og:image" content="{{ SITEURL }}/images/{{ article.illustration }}">
+        {% elif NEST_HEADER_IMAGES %}
+        <meta name="image" property="og:image" content="{{ SITEURL }}/images/{{ NEST_HEADER_IMAGES }}">
+        <meta property="og:image" content="{{ SITEURL }}/images/{{ NEST_HEADER_IMAGES }}">
+        {% endif %}
+{% endblock additional_headers %}
 
 {% block headerstyle %}
     {% if article.illustration %}

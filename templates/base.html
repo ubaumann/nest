@@ -6,7 +6,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="{% block description %}{% endblock description %}">
+        <meta property="og:description" content="{{ self.description() }}">
         <meta name="keywords" content="{% block keywords %}{% endblock keywords %}">
+        {% block additional_headers %}
+        {% endblock additional_headers %}
         <link rel="icon" href="{{ SITEURL }}/favicon.ico">
         {% if NEST_REL_CANONICAL_LINK %}
         <!-- Canonical -->
@@ -25,6 +28,7 @@
         {% endif %}
 
         <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+        <meta property="og:title" content="{{ self.title() }}">
 
         <!-- Stylesheets -->
         {% if NEST_CSS_MINIFY %}
