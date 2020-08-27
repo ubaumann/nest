@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}{{ article.title }} - {{ super() }}{% endblock title %}
-{% block description %}{{ article.content|striptags|truncate(200)|replace("¶", " – ")|escape }}{% endblock description %}
+{% block description %}{% if article.summary %}{{ article.summary|striptags|escape}}{% else %}{{ article.content|striptags|truncate(200)|replace("¶", " – ")|escape }}{% endif %}{% endblock description %}
 {% block keywords %}{% for tag in article.tags|sort %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% endblock keywords %}
 
 {% block additional_headers %}
