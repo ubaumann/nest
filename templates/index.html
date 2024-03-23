@@ -46,7 +46,18 @@
         <div class="container content archive">
             <h2><a href="{{ SITEURL }}/">{{ NEST_INDEX_CONTENT_TITLE }}</a></h2>
             <dl class="dl-horizontal">
-                {% for article in articles %}
+                {% for article in articles if article.category != "Brief_Byte" %}
+                <dt>{{ article.locale_date}}</dt>
+                <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
+                {% endfor %}
+            </dl>
+        </div>
+    </div>
+    <div class="archive-container">
+        <div class="container content archive">
+            <h2><a href="{{ SITEURL }}/category/brief_byte.html">Brief Bytes</a></h2>
+            <dl class="dl-horizontal">
+                {% for article in articles if article.category == "Brief_Byte" %}
                 <dt>{{ article.locale_date}}</dt>
                 <dd><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></dd>
                 {% endfor %}
